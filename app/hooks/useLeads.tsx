@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "../context/authContext";
 import { getLeads, countLeads } from "../services/leadService";
 
 interface Lead {
@@ -12,9 +10,7 @@ interface Lead {
   createdAt: string;
 }
 
-export const useLeads = () => {
-  const router = useRouter();
-  const { user, token, initializing } = useAuth();
+export const useLeads = (token: string | null) => {
   const [data, setData] = useState<Lead[]>([]);
   const [totalRecords, setTotalRecords] = useState(0);
   const [pageIndex, setPageIndex] = useState(0);
@@ -23,12 +19,7 @@ export const useLeads = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (initializing) {
-      return;
-    }
-
     if (!token) {
-      router.push("/login");
       return;
     }
     const fetchData = async () => {
@@ -47,7 +38,7 @@ export const useLeads = () => {
     };
 
     fetchData();
-  }, [user, token, pageIndex, pageSize, router, filters, initializing]);
+  }, [token, pageIndex, pageSize, filters]);
 
   return {
     data,

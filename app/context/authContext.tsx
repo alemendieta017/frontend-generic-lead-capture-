@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 
 interface User {
   _id: string;
@@ -14,6 +14,11 @@ interface AuthContextProps {
   login: (token: string) => void;
   logout: () => void;
   initializing: boolean;
+}
+
+interface UserToken extends JwtPayload {
+  email: string;
+  id: string;
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -35,16 +40,20 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
-      if (isTokenExpired(storedToken)) {
+      const decodedToken = jwtDecode<UserToken>(storedToken);
+      if (isTokenExpired(decodedToken)) {
         setToken(null);
         setUser(null);
         localStorage.removeItem("token");
+        setInitializing(false);
         return;
       }
       setToken(storedToken);
       localStorage.setItem("token", storedToken);
-      const decodedToken = jwtDecode<User>(storedToken);
-      setUser(decodedToken);
+      setUser({
+        _id: decodedToken.id,
+        email: decodedToken.email,
+      });
     }
     setInitializing(false);
   }, []);
@@ -63,8 +72,10 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     router.push("/login");
   };
 
-  const isTokenExpired = (token: string) => {
-    const decodedToken = jwtDecode<{ exp: number }>(token);
+  const isTokenExpired = (decodedToken: UserToken) => {
+    if (!decodedToken.exp) {
+      return true;
+    }
     return Date.now() >= decodedToken.exp * 1000;
   };
 

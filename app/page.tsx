@@ -1,11 +1,23 @@
 "use client";
-import React from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "./components/Navbar";
 import LeadsTable from "./components/LeadsTable";
 import LeadsPagination from "./components/LeadsPagination";
 import { useLeads } from "./hooks/useLeads";
+import { useAuth } from "./context/authContext";
+import Loader from "./components/Loader";
 
 export default function Home() {
+  const { initializing, token } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!initializing && !token) {
+      router.push("/login");
+    }
+  }, [initializing, token, router]);
+
   const {
     data,
     totalRecords,
@@ -16,14 +28,23 @@ export default function Home() {
     setPageSize,
     filters,
     setFilters,
-  } = useLeads();
+  } = useLeads(token);
+
+  if (initializing || !token) {
+    return <Loader />;
+  }
 
   return (
-    <div className="min-h-screen bg-gray-100 max-w-full">
+    <div className="min-h-screen max-w-full bg-gray-100">
       <Navbar />
-      <main className="container mx-auto py-8 px-2">
-        <h1 className="text-primary mb-4 text-2xl font-bold">Leads</h1>
-        <LeadsTable data={data} loading={loading} filters={filters} setFilters={setFilters} />
+      <main className="container mx-auto px-2 py-8">
+        <h1 className="mb-4 text-2xl font-bold text-primary">Leads</h1>
+        <LeadsTable
+          data={data}
+          loading={loading}
+          filters={filters}
+          setFilters={setFilters}
+        />
         <LeadsPagination
           totalRecords={totalRecords}
           pageSize={pageSize}
