@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
 import { getLeads, countLeads } from "../services/leadService";
 import useDebounce from "./useDebounce";
-
-interface Lead {
-  _id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  createdAt: string;
-}
+import Lead from "@/app/interfaces/lead.types";
 
 export const useLeads = (token: string | null) => {
   const [data, setData] = useState<Lead[]>([]);
