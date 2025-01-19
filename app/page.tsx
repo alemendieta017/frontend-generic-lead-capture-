@@ -25,7 +25,6 @@ export default function Home() {
     pageSize,
     loading,
     setPageIndex,
-    setPageSize,
     filters,
     setFilters,
   } = useLeads(token);
@@ -35,10 +34,10 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen max-w-full bg-gray-100">
+    <div className="flex flex-col min-h-screen max-w-full bg-gray-100">
       <Navbar />
-      <main className="container mx-auto px-2 py-8">
-        <h1 className="mb-4 text-2xl font-bold text-primary">Leads</h1>
+      <main className="container mx-auto px-2 py-8 grow">
+        <h1 className="mb-4 text-2xl font-bold text-primary-500">Leads</h1>
         <LeadsTable
           data={data}
           loading={loading}
@@ -50,7 +49,6 @@ export default function Home() {
           pageSize={pageSize}
           pageIndex={pageIndex}
           setPageIndex={setPageIndex}
-          setPageSize={setPageSize}
         />
       </main>
     </div>

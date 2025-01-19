@@ -14,7 +14,7 @@ interface Lead {
 export const useLeads = (token: string | null) => {
   const [data, setData] = useState<Lead[]>([]);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [filters, setFilters] = useState({});
   const debouncedFilters = useDebounce(filters, 300);

@@ -14,7 +14,7 @@ const DatePicker = ({
         <input
           name="dateFrom"
           type="date"
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm placeholder:text-gray-500 focus:border-primary focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary dark:focus:ring-primary"
+          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm placeholder:text-gray-500 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
           placeholder="Seleccione fecha de inicio"
           onChange={(e) => {
             const isoDate = new Date(e.target.value).toISOString();

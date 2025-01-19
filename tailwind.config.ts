@@ -13,7 +13,19 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        primary: "#44ABB6",
+        primary: {
+          "50": "#f0fafb",
+          "100": "#daf2f3",
+          "200": "#b9e5e8",
+          "300": "#89d1d7",
+          "400": "#44abb6",
+          "500": "#3698a4",
+          "600": "#307c8a",
+          "700": "#2c6672",
+          "800": "#2b545f",
+          "900": "#284751",
+          "950": "#162e36",
+        },
       },
       fontFamily: {
         sans: ["var(--font-open-sans)"],

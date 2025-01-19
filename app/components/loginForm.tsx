@@ -89,7 +89,7 @@ const LoginForm = () => {
         </div>
         <a
           href="#"
-          className="text-primary dark:text-primary text-xs font-medium hover:underline md:text-sm"
+          className="text-primary-500 dark:text-primary-500 text-xs font-medium hover:underline md:text-sm"
         >
           ¿Olvidaste tu contraseña?
         </a>
@@ -97,7 +97,7 @@ const LoginForm = () => {
       {error && <div className="text-sm text-red-500">{error}</div>}
       <button
         type="submit"
-        className="bg-primary w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+        className="bg-primary-500 w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
         disabled={loading}
       >
         {loading ? "Cargando..." : "Iniciar sesión"}
@@ -106,7 +106,7 @@ const LoginForm = () => {
         ¿Todavía no tienes una cuenta?{" "}
         <a
           href="#"
-          className="text-primary dark:text-primary font-medium hover:underline"
+          className="text-primary-500 dark:text-primary-500 font-medium hover:underline"
         >
           Regístrate
         </a>

@@ -3,7 +3,6 @@ import React from "react";
 interface LeadsPaginationProps {
   totalRecords: number;
   pageSize: number;
-  setPageSize: (size: number) => void;
   pageIndex: number;
   setPageIndex: (index: number | ((prevIndex: number) => number)) => void;
 }
@@ -11,63 +10,50 @@ interface LeadsPaginationProps {
 const LeadsPagination = ({
   totalRecords,
   pageSize,
-  setPageSize,
   pageIndex,
   setPageIndex,
 }: LeadsPaginationProps) => {
+  const totalPages = Math.ceil(totalRecords / pageSize);
+
+  const handlePrevious = () => {
+    setPageIndex((prevIndex) => Math.max(prevIndex - 1, 1));
+  };
+
+  const handleNext = () => {
+    setPageIndex((prevIndex) => Math.min(prevIndex + 1, totalPages));
+  };
+
   return (
-    <div className="pagination mt-4">
-      <button
-        onClick={() => setPageIndex(0)}
-        disabled={pageIndex === 0}
-        className="mr-2 rounded bg-primary px-4 py-2 text-white"
-      >
-        {"<<"}
-      </button>
-      <button
-        onClick={() =>
-          setPageIndex((prevIndex: number) => Math.max(prevIndex - 1, 0))
-        }
-        disabled={pageIndex === 0}
-        className="mr-2 rounded bg-primary px-4 py-2 text-white"
-      >
-        {"<"}
-      </button>
-      <button
-        onClick={() =>
-          setPageIndex((prev) =>
-            (prev + 1) * pageSize < totalRecords ? prev + 1 : prev,
-          )
-        }
-        disabled={(pageIndex + 1) * pageSize >= totalRecords}
-        className="mr-2 rounded bg-primary px-4 py-2 text-white"
-      >
-        {">"}
-      </button>
-      <button
-        onClick={() => setPageIndex(Math.ceil(totalRecords / pageSize) - 1)}
-        disabled={(pageIndex + 1) * pageSize >= totalRecords}
-        className="rounded bg-primary px-4 py-2 text-white"
-      >
-        {">>"}
-      </button>
-      <span className="ml-4">
-        Página{" "}
-        <strong>
-          {pageIndex + 1} de {Math.ceil(totalRecords / pageSize)}
-        </strong>{" "}
+    <div className="flex flex-col items-center bg-white p-6">
+      <span className="text-sm text-gray-700 dark:text-gray-400">
+        Mostrando{" "}
+        <span className="font-semibold text-primary-900 dark:text-white">
+          {Math.min((pageIndex - 1) * pageSize + 1, totalRecords)}
+        </span>{" "}
+        a{" "}
+        <span className="font-semibold text-primary-900 dark:text-white">
+          {Math.min(pageIndex * pageSize, totalRecords)}
+        </span>{" "}
+        de{" "}
+        <span className="font-semibold text-primary-900 dark:text-white">
+          {totalRecords}
+        </span>{" "}
+        Registros
       </span>
-      <select
-        value={pageSize}
-        onChange={(e) => setPageSize(parseInt(e.target.value, 10))}
-        className="ml-4 rounded border px-4 py-2"
-      >
-        {[10, 20, 30, 40, 50].map((size) => (
-          <option key={size} value={size}>
-            Mostrar {size}
-          </option>
-        ))}
-      </select>
+      <div className="xs:mt-0 mt-2 inline-flex">
+        <button
+          onClick={handlePrevious}
+          className="bg-primary-500 hover:bg-primary-900 dark:border-primary-700 dark:bg-primary-500 dark:hover:bg-primary-700 flex h-10 items-center justify-center rounded-s px-4 text-base font-medium text-white dark:text-gray-400 dark:hover:text-white"
+        >
+          Anterior
+        </button>
+        <button
+          onClick={handleNext}
+          className="border-primary-700 bg-primary-500 hover:bg-primary-900 dark:border-primary-700 dark:bg-primary-500 dark:hover:bg-primary-700 flex h-10 items-center justify-center rounded-e border-0 border-s px-4 text-base font-medium text-white dark:text-gray-400 dark:hover:text-white"
+        >
+          Siguiente
+        </button>
+      </div>
     </div>
   );
 };

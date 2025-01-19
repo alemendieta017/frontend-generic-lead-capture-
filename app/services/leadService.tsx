@@ -13,7 +13,7 @@ const getLeads = async (
   filters: LeadFilters,
 ) => {
   const queryParams = new URLSearchParams({
-    offset: (pageIndex * pageSize).toString(),
+    offset: ((pageIndex - 1) * pageSize).toString(),
     limit: pageSize.toString(),
     ...filters,
   });
