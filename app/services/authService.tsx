@@ -1,5 +1,6 @@
 "use client";
 import config from "../config/config";
+import { User } from "../interfaces/user.types";
 
 interface LoginResponse {
   token: string;
@@ -48,4 +49,21 @@ const register = async (data: RegisterData): Promise<void> => {
   }
 };
 
-export { login, register };
+const getProfile = async (userId: string, token: string): Promise<User> => {
+  const response = await fetch(`${config.API_URL}/users/${userId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al obtener el perfil");
+  }
+
+  const profile: User = await response.json();
+
+  return profile;
+};
+
+export { login, register, getProfile };

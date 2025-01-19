@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getLeads, countLeads } from "../services/leadService";
+import useDebounce from "./useDebounce";
 
 interface Lead {
   _id: number;
@@ -16,6 +17,7 @@ export const useLeads = (token: string | null) => {
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [filters, setFilters] = useState({});
+  const debouncedFilters = useDebounce(filters, 300);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -25,10 +27,15 @@ export const useLeads = (token: string | null) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const result = await getLeads(token, pageIndex, pageSize, filters);
+        const result = await getLeads(
+          token,
+          pageIndex,
+          pageSize,
+          debouncedFilters,
+        );
         setData(result);
 
-        const count = await countLeads(token, filters);
+        const count = await countLeads(token, debouncedFilters);
         setTotalRecords(count);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -38,7 +45,7 @@ export const useLeads = (token: string | null) => {
     };
 
     fetchData();
-  }, [token, pageIndex, pageSize, filters]);
+  }, [token, pageIndex, pageSize, debouncedFilters]);
 
   return {
     data,

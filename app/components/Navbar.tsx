@@ -12,7 +12,7 @@ const Navbar = () => {
       <nav className="border-gray-200 bg-white px-4 shadow dark:bg-gray-900">
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
           <a href="#" className="flex items-center rtl:space-x-reverse">
-            <div className="flex h-16 w-8 items-center justify-center overflow-hidden">
+            <div className="flex h-16 w-9 items-center justify-center overflow-hidden">
               <Image
                 src="/fronteer-logo-shape.svg"
                 alt="Flowbite Logo"
@@ -21,7 +21,7 @@ const Navbar = () => {
                 className="h-full object-cover"
               />
             </div>
-            <h1>fronteer</h1>
+            <h1 className="font-sans font-medium">fronteer</h1>
           </a>
           <button
             data-collapse-toggle="navbar-default"
@@ -48,14 +48,19 @@ const Navbar = () => {
               />
             </svg>
           </button>
-          <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse">
+          <div
+            className="hidden w-full font-sans md:block md:w-auto"
+            id="navbar-default"
+          >
+            <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-10 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse">
               {user ? (
                 <>
-                  <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <span className="text-gray-900 dark:text-white">Hola,</span>
-                    <span className="text-gray-900 dark:text-white font-bold">
-                      {user.email}
+                  <li className="flex items-center">
+                    <span className="font-light">
+                      Hola&nbsp;
+                      <span className="font-medium text-gray-900 dark:text-white">
+                        {user.firstName}
+                      </span>
                     </span>
                   </li>
                   <li>
@@ -86,12 +91,13 @@ const Navbar = () => {
           toggleDropdown ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
         } overflow-hidden border-b border-gray-200 bg-slate-50 shadow-inner dark:border-gray-700`}
       >
-        <ul className="flex flex-col divide-y rtl:space-x-reverse">
+        <ul className="flex flex-col divide-y font-sans rtl:space-x-reverse">
           {user ? (
             <>
-              <li className="flex items-center justify-center space-x-3 p-4 rtl:space-x-reverse">
-                <span className="text-gray-900 dark:text-white">
-                  Hola, {user.email}
+              <li className="flex items-center justify-center space-x-1 p-4 rtl:space-x-reverse">
+                <span className="text-gray-900 dark:text-white">Hola</span>
+                <span className="font-medium text-gray-900 dark:text-white">
+                  {user.firstName}
                 </span>
               </li>
               <li className="flex items-center justify-center space-x-3 p-4 rtl:space-x-reverse">

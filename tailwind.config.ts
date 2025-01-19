@@ -15,6 +15,10 @@ export default {
         foreground: "var(--foreground)",
         primary: "#44ABB6",
       },
+      fontFamily: {
+        sans: ["var(--font-open-sans)"],
+        mono: ["var(--font-geist-mono)"],
+      },
     },
   },
   plugins: [flowbite.plugin()],
